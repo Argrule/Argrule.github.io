@@ -6,13 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022/6 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="闭包12345678function f1() &amp;#123;    var n &#x3D; &quot;Mozilla&quot;;    function f2() &amp;#123;        alert(n);&amp;#125;&#x2F;&#x2F;f2可以访问f1中的n    return f2;&#x2F;&#x2F;把f2作为返回值&amp;#125;var m &#x3D; f1();m();&#x2F;&#x2F;就可以在f1外读取f1内部变量  描述 闭包可以让你从内部">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/06/index.html">
+<meta property="og:url" content="http://example.com/2022/06/06/%E9%97%AD%E5%8C%85%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="闭包12345678function f1() &amp;#123;    var n &#x3D; &quot;Mozilla&quot;;    function f2() &amp;#123;        alert(n);&amp;#125;&#x2F;&#x2F;f2可以访问f1中的n    return f2;&#x2F;&#x2F;把f2作为返回值&amp;#125;var m &#x3D; f1();m();&#x2F;&#x2F;就可以在f1外读取f1内部变量  描述 闭包可以让你从内部">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-06-06T14:09:38.304Z">
+<meta property="article:modified_time" content="2022-04-22T13:28:21.875Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -150,238 +154,183 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-闭包与上下文" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">f1</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> n = <span class="string">&quot;Mozilla&quot;</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">f2</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="title function_">alert</span>(n);&#125;<span class="comment">//f2可以访问f1中的n</span></span><br><span class="line">    <span class="keyword">return</span> f2;<span class="comment">//把f2作为返回值</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> m = <span class="title function_">f1</span>();</span><br><span class="line"><span class="title function_">m</span>();<span class="comment">//就可以在f1外读取f1内部变量</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><ul>
+<li>闭包可以让你从内部函数访问外部函数作用域。</li>
+<li>子级可以向父级查找变量，逐级查找，直到找到，并且闭包能让函数的内部变量（局部变量）始终保存在内存中。</li>
+<li>一个函数在<strong>定义时</strong>和它周围状态的<strong>引用</strong>捆绑在一起，函数可以记住并访问所在的词法作用域</li>
+<li>内部函数的作用域链<strong>仍然</strong>保存对外部函数<strong>活动对象</strong>的<strong>引用</strong></li>
+</ul>
+<h2 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h2><p>上下文有三种：</p>
+<ul>
+<li><p>全局上下文</p>
+</li>
+<li><p>函数上下文&#x3D;&#x3D;&gt;arguments</p>
+<p>​	函数执行上下文在函数调用时创建，若多次调用则都会创建一个新的上下文</p>
+<p>​	执行上下文栈（调用栈，执行栈）储存代码执行期间创建的所有上下文，有LIFO（后进先出）特性</p>
+</li>
+<li><p>eval上下文</p>
+</li>
+</ul>
+<p>上下文中有三个属性：</p>
+<ol>
+<li>VO（变量对象），激活后为（AO）活动对象</li>
+<li>作用域链</li>
+<li>this</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">	<span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i++);</span><br><span class="line">    &#125;,<span class="number">4000</span>);<span class="comment">//5 6 7 8 9</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(i);<span class="comment">//5</span></span><br><span class="line"><span class="comment">//setTimeout有执行队列</span></span><br><span class="line"><span class="comment">//////////////////////////////////////////////</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">	(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(i++);</span><br><span class="line">    &#125;)();<span class="comment">//0 2 4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(i);<span class="comment">//6</span></span><br><span class="line"><span class="comment">//////////////////////////////////////////////</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">    (<span class="keyword">function</span>(<span class="params">x</span>)&#123;</span><br><span class="line">		<span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        	<span class="variable language_">console</span>.<span class="title function_">log</span>(x++);<span class="comment">//x到底是消失了只在scope中，还是原本就没销毁，毕竟scope是引用？？？</span></span><br><span class="line">    	&#125;,<span class="number">4000</span>);</span><br><span class="line">    &#125;)(i);<span class="comment">//0 1 2 3 4</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(i);<span class="comment">//5</span></span><br></pre></td></tr></table></figure>
+
+<p>setTimeout是异步宏任务，不会直接执行，而会被放入任务队列里面，等待所有的同步代码执行完毕后才会执行。</p>
+<p>为什么会一下输出56789，而不是每隔4秒输出，是因为在同步代码中通过for循环在极短的时间内就将5个异步任务放入了任务队列，他们几乎同时开始计时。所以隔了4秒后，所有的任务几乎同时完成。完成的任务会一个一个的从任务队列中取出，来到主线程中（也就是同步任务执行的线程）。</p>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><p>方便调用上下文中声明的局部变量</p>
+<p>可以在一个<strong>函数中</strong>再<strong>创建函数</strong>，避免<strong>传参</strong>问题</p>
+<h2 id="闭包的危害"><a href="#闭包的危害" class="headerlink" title="闭包的危害"></a><strong>闭包的危害</strong></h2><p>内部函数被保留到外部，导致原有的作用域链不释放，造成<strong>内存泄露</strong>，</p>
+<p>尤其在闭包中有<strong>DOM</strong>时和<strong>大量</strong>使用闭包时内存消耗很大</p>
+<p>所以<strong>能用this就不用闭包</strong></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E6%AD%A3%E5%88%99/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.429Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/06/06/%E9%97%AD%E5%8C%85%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.413Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.397Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2022/06/06/%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89,var%E5%8F%98%E9%87%8F/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/06/this%E4%B8%8E%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.351Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E6%95%B0%E6%8D%AE,%E5%8F%98%E9%87%8F/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.335Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89,var%E5%8F%98%E9%87%8F/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.319Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E9%97%AD%E5%8C%85%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.304Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/this%E4%B8%8E%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.288Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/String,FunctionReview/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.226Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/04/hello-world/" class="archive-article-date">
-  	<time datetime="2022-06-04T15:10:21.738Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/06/04/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -404,8 +353,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,

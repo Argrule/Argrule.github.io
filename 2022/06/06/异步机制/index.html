@@ -6,15 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2022/6 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="异步JavaScript在设计之初为了防止DOM冲突，设计成单线程； 同步按你的代码顺序执行， 异步不按照代码顺序执行，异步的执行效率更高；异步就是从主线程发射一个子线程来完成任务。 常用子线程来完成一些可能消耗时间足够长以至于被用户察觉的事情，比如读取一个大文件或者发出一个网络请求， 子线程独立于主线程，所以即使出现阻塞也不会影响主线程的运行。 但是子线程有一个局限：一旦发射了以后就会与主线程失">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2022/06/index.html">
+<meta property="og:url" content="http://example.com/2022/06/06/%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="异步JavaScript在设计之初为了防止DOM冲突，设计成单线程； 同步按你的代码顺序执行， 异步不按照代码顺序执行，异步的执行效率更高；异步就是从主线程发射一个子线程来完成任务。 常用子线程来完成一些可能消耗时间足够长以至于被用户察觉的事情，比如读取一个大文件或者发出一个网络请求， 子线程独立于主线程，所以即使出现阻塞也不会影响主线程的运行。 但是子线程有一个局限：一旦发射了以后就会与主线程失">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20220423160457345.png">
+<meta property="article:published_time" content="2022-06-06T14:09:38.397Z">
+<meta property="article:modified_time" content="2022-06-04T04:41:48.773Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/Administrator/AppData/Roaming/Typora/typora-user-images/image-20220423160457345.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,238 +156,167 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-异步机制" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h2><p>JavaScript在设计之初为了防止<strong>DOM冲突</strong>，设计成<strong>单线程</strong>；</p>
+<p><strong>同步</strong>按你的代码顺序执行，</p>
+<p><strong>异步</strong>不按照代码顺序执行，异步的执行效率更高；异步就是从主线程发射一个子线程来完成任务。</p>
+<p>常用子线程来完成一些可能消耗时间足够长以至于被用户察觉的事情，比如读取一个大文件或者发出一个网络请求，</p>
+<p>子线程独立于主线程，所以即使出现阻塞也不会影响主线程的运行。</p>
+<p>但是子线程有一个局限：一旦发射了以后就会与主线程失去同步，我们无法确定它的结束，如果结束之后需要处理一些事情，比如处理来自服务器的信息，我们是无法将它合并到主线程中去的。</p>
+<p>像插入定时器任务这样的异步任务，需要用回调函数来实现；</p>
+<p>回调函数就是一个函数，它是在我们启动一个异步任务的时候就告诉它：等你完成了这个任务之后要干什么。这样一来主线程几乎不用关心异步任务的状态了，他自己会善始善终。</p>
+<p>异步的解决方案是	事件轮询</p>
+<h2 id="任务队列-Callback-queue"><a href="#任务队列-Callback-queue" class="headerlink" title="任务队列 Callback queue"></a>任务队列 Callback queue</h2><p>宏任务在主线程（Call Stack）中执行</p>
+<p>主线程中运行到 setTimeout，开启一个异步线程，就执行完成了</p>
+<p>setTimeout 是一个属于异步线程的任务，调用异步的js器 ，在web APIs中运行</p>
+<p>web APIs中执行异步任务，将事件执行完后推入任务队列中</p>
+<h4 id="事件轮询Event-Loop"><a href="#事件轮询Event-Loop" class="headerlink" title="事件轮询	Event Loop"></a>事件轮询	Event Loop</h4><p>主线程中没有任务时就会不断轮询任务队列</p>
+<p>核心：回调函数</p>
+<h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><h2 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h2><h2 id="宏微任务"><a href="#宏微任务" class="headerlink" title="宏微任务"></a>宏微任务</h2><p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20220423160457345.png" alt="image-20220423160457345"></p>
+<p><em><strong>注意</strong></em>：先执行微任务，再执行宏任务</p>
+<p>小心有坑：有时候看起来是宏任务先执行，其实是微任务都还没有执行抛出的动作，所以连微任务都还没出现呢</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2022" class="archive-year">2022</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E6%AD%A3%E5%88%99/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.429Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2022/06/06/%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E5%8E%9F%E5%9E%8B%E9%93%BE/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.413Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E5%BC%82%E6%AD%A5%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.397Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+<nav id="article-nav">
+  
+    <a href="/2022/06/06/%E5%8E%9F%E5%9E%8B%E9%93%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          (no title)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/06/06/%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.351Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E6%95%B0%E6%8D%AE,%E5%8F%98%E9%87%8F/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.335Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+        
+        
+    </div>
+</aside>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E5%87%BD%E6%95%B0%E5%AE%9A%E4%B9%89,var%E5%8F%98%E9%87%8F/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.319Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/%E9%97%AD%E5%8C%85%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.304Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/this%E4%B8%8E%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.288Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/06/String,FunctionReview/" class="archive-article-date">
-  	<time datetime="2022-06-06T14:09:38.226Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-06</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2022/06/04/hello-world/" class="archive-article-date">
-  	<time datetime="2022-06-04T15:10:21.738Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-06-04</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2022/06/04/hello-world/">Hello World</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -404,8 +339,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
